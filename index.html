@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Efou — @imefou</title>
+<meta name="description" content="Efou (@imefou) — editor and creative. Portfolio, contact, and work.">
+<link rel="icon" href="assets/logo.gif">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<video id="bg-video" class="bg-video" autoplay muted loop playsinline aria-hidden="true">
+  <source src="assets/bg-video.mp4" type="video/mp4">
+</video>
+<div class="bg-overlay" aria-hidden="true"></div>
+
+<header class="site-header">
+  <a class="brand" id="brand" href="#top">
+    <img src="assets/logo.gif" alt="Efou logo" class="brand-logo">
+    <span class="brand-name">efou</span>
+  </a>
+
+  <a class="header-status" id="header-status" href="#top" aria-label="Efou — probably editing something right now">
+    <img src="assets/logo.gif" alt="" class="header-status__avatar">
+    <div class="header-status__text">
+      <span class="header-status__name">Efou</span>
+      <span class="header-status__sub">probably editing something right now</span>
+    </div>
+  </a>
+
+  <nav class="main-nav" id="main-nav">
+    <a href="#hero" class="nav-link">About</a>
+    <a href="#work" class="nav-link">Work</a>
+    <a href="#page-end" class="nav-link">Contact</a>
+  </nav>
+
+  <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="main-nav">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<main id="top">
+
+  <section class="hero" id="hero">
+    <div class="hero-video hero-video--left" id="tiktok-left" aria-hidden="true"></div>
+
+    <div class="hero-center">
+    <div class="hero-text reveal">
+      <p class="eyebrow">@imefou</p>
+      <h1 class="hero-title">
+        <span class="line">Hi, I'm</span>
+        <span class="line accent-text gradient-text" id="typed-name">Efou</span>
+      </h1>
+      <p class="hero-sub" id="hero-sub"></p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn btn-primary pill">Get in touch</a>
+        <a href="#about" class="btn btn-ghost pill">About me</a>
+        <button class="icon-btn" id="scroll-hint" aria-label="Scroll to about section" type="button">
+          <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+            <polygon transform="translate(20,20) rotate(-90) translate(-20,-20) translate(12,8)" points="12.8 0 15.6 2.9 5.7 12.2 15.6 22 12.7 24.8 2.8 14.9 2.7 14.9 1.4 13.5 0 12.1 0 12.1 0 12 1.4 10.7 2.8 9.3 2.9 9.3"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="status-card reveal" style="--delay:120ms">
+      <div class="status-card-top">
+        <span class="status-dot" aria-hidden="true"></span>
+        <span class="status-card-label">efou</span>
+      </div>
+      <div class="status-card-body">
+        <img src="assets/logo.gif" alt="" class="status-avatar">
+        <div class="status-info">
+          <div class="status-name-row">
+            <span class="status-name">Efou</span>
+            <span class="status-tag">@imefou</span>
+          </div>
+          <p class="status-text">Editing something right now, probably.</p>
+        </div>
+      </div>
+      <div class="status-divider"></div>
+      <div class="status-row">
+        <div>
+          <p class="status-row-title">Status</p>
+          <p class="status-row-sub">Open for edits</p>
+        </div>
+        <span class="toggle" aria-hidden="true">
+          <input class="toggle__input" id="status-toggle" type="checkbox" checked disabled>
+          <label class="toggle__switch" for="status-toggle"></label>
+        </span>
+      </div>
+      <div class="graph" aria-hidden="true">
+        <span class="graph__bar"></span>
+        <span class="graph__bar"></span>
+        <span class="graph__bar"></span>
+        <span class="graph__bar"></span>
+        <span class="graph__bar"></span>
+      </div>
+    </div>
+    </div>
+
+    <div class="hero-video hero-video--right" id="tiktok-right" aria-hidden="true"></div>
+  </section>
+
+  <section class="about" id="about">
+    <h2 class="section-title reveal">About</h2>
+    <div class="about-grid">
+      <p class="about-text reveal">Hello! My name is Efou and I like editing!</p>
+      <div class="about-cards">
+        <div class="mini-card reveal" style="--delay:60ms">
+          <span class="mini-card-icon">✂️</span>
+          <p class="mini-card-title">Editing</p>
+          <p class="mini-card-sub">I've been editing since <strong id="edit-day-count">—</strong> days on DaVinci Resolve Studio!</p>
+        </div>
+        <div class="mini-card reveal" style="--delay:140ms">
+          <span class="mini-card-icon">🎬</span>
+          <p class="mini-card-title">Specialty</p>
+          <p class="mini-card-sub">I specialize in motion graphics and game montages!</p>
+        </div>
+        <div class="mini-card reveal" style="--delay:220ms">
+          <span class="mini-card-icon">🌟</span>
+          <p class="mini-card-title">Inspired</p>
+          <p class="mini-card-sub">Inspired Content Creator!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work" id="work">
+    <h2 class="section-title reveal">Work</h2>
+    <div class="work-placeholder reveal">
+      <div class="work-placeholder-grid" aria-hidden="true">
+        <span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <p class="work-placeholder-title">Projects coming soon</p>
+      <p class="work-placeholder-sub">This section is getting filled in. Check back later, or ask Efou directly.</p>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact-card reveal">
+      <h2 class="contact-title">Need something edited?</h2>
+      <p class="contact-sub">Send a message. Discord is the fastest way to reach me.</p>
+      <div class="contact-links">
+        <a class="btn btn-primary pill" href="https://discord.com/users/imefou" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.317 4.369a19.79 19.79 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.74 19.74 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.056 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.2 14.2 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.1 13.1 0 0 1-1.872-.892.077.077 0 0 1-.008-.128c.126-.094.252-.192.372-.291a.074.074 0 0 1 .078-.01c3.927 1.793 8.18 1.793 12.061 0a.073.073 0 0 1 .079.009c.12.099.246.198.373.292a.077.077 0 0 1-.006.127c-.598.35-1.22.645-1.873.893a.076.076 0 0 0-.04.106c.36.698.772 1.363 1.225 1.993a.077.077 0 0 0 .084.029 19.84 19.84 0 0 0 6.002-3.03.077.077 0 0 0 .032-.055c.5-5.177-.838-9.673-3.549-13.66a.06.06 0 0 0-.031-.028ZM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.334-.955 2.419-2.157 2.419Zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.418 2.157-2.418 1.21 0 2.176 1.094 2.157 2.418 0 1.334-.946 2.419-2.157 2.419Z"/></svg>
+          Discord — @imefou
+        </a>
+        <a class="btn btn-ghost pill" href="https://www.tiktok.com/@imefou" target="_blank" rel="noopener">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.6 5.82c-.83-.73-1.34-1.77-1.4-2.95h-3.07v13.37c0 1.5-1.22 2.72-2.72 2.72a2.72 2.72 0 0 1-2.72-2.72 2.72 2.72 0 0 1 2.72-2.72c.27 0 .53.04.78.11v-3.12a5.86 5.86 0 0 0-.78-.05 5.86 5.86 0 0 0-5.86 5.86A5.86 5.86 0 0 0 9.41 22a5.86 5.86 0 0 0 5.86-5.86V9.01a8.92 8.92 0 0 0 5.15 1.63V7.58a5.6 5.6 0 0 1-3.82-1.76Z"/></svg>
+          TikTok — @imefou
+        </a>
+        <a class="btn btn-ghost pill" href="mailto:imefoutt@gmail.com">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 5h18v14H3z"/><path d="m3 7 9 6 9-6"/></svg>
+          imefoutt@gmail.com
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="page-end">
+  <p>Efou.</p>
+  <button class="icon-btn icon-btn--up" id="back-to-top" aria-label="Back to top" type="button">
+    <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <polygon transform="translate(20,20) rotate(90) translate(-20,-20) translate(12,8)" points="12.8 0 15.6 2.9 5.7 12.2 15.6 22 12.7 24.8 2.8 14.9 2.7 14.9 1.4 13.5 0 12.1 0 12.1 0 12 1.4 10.7 2.8 9.3 2.9 9.3"/>
+    </svg>
+  </button>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
