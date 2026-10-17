@@ -140,7 +140,7 @@
 
   /* typing effect on hero subtitle */
   var subEl = document.getElementById('hero-sub');
-  var fullText = "Editor. Creative. Always making something.";
+  var fullText = "Editor — game montages & motion graphics.";
   if (subEl) {
     if (reduceMotion) {
       subEl.textContent = fullText;
