@@ -3,6 +3,45 @@
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* hex grid background — build a pointy-top honeycomb once at load
+     covering the SVG viewBox. A random ~18% of cells gets the pulse
+     class with a random delay, so flashes feel sparse and unsynced.
+     The hexes are polygon elements under one <svg>, so the whole thing
+     is one draw layer and the browser can offload it to the GPU. */
+  var hexSvg = document.querySelector('.bg-hex__svg');
+  if (hexSvg) {
+    var vbW = 1600, vbH = 1000;
+    var size = 46;                         // hex radius (center to vertex)
+    var hexW = Math.sqrt(3) * size;        // pointy-top horizontal pitch
+    var rowStep = 1.5 * size;              // vertical pitch (overlapping)
+    var cols = Math.ceil(vbW / hexW) + 2;
+    var rows = Math.ceil(vbH / rowStep) + 2;
+    var NS = 'http://www.w3.org/2000/svg';
+    var frag = document.createDocumentFragment();
+    for (var r = 0; r < rows; r++) {
+      var yC = r * rowStep - size;
+      var xOff = (r % 2) ? hexW / 2 : 0;
+      for (var c = 0; c < cols; c++) {
+        var xC = c * hexW + xOff - hexW / 2;
+        var pts = '';
+        for (var v = 0; v < 6; v++) {
+          var a = Math.PI / 3 * v - Math.PI / 2;
+          pts += (xC + size * Math.cos(a)).toFixed(1) + ',' +
+                 (yC + size * Math.sin(a)).toFixed(1) + ' ';
+        }
+        var poly = document.createElementNS(NS, 'polygon');
+        poly.setAttribute('points', pts.trim());
+        poly.setAttribute('class', 'bg-hex__cell');
+        if (!reduceMotion && Math.random() < 0.18) {
+          poly.classList.add('bg-hex__cell--pulse');
+          poly.style.setProperty('--d', (Math.random() * 7.5).toFixed(2) + 's');
+        }
+        frag.appendChild(poly);
+      }
+    }
+    hexSvg.appendChild(frag);
+  }
+
   /* mobile nav toggle */
   var toggle = document.getElementById('nav-toggle');
   var nav = document.getElementById('main-nav');
