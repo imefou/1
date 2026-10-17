@@ -3,19 +3,23 @@
 
   var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* hex grid background — build a pointy-top honeycomb once at load
-     covering the SVG viewBox. A random ~18% of cells gets the pulse
-     class with a random delay, so flashes feel sparse and unsynced.
-     The hexes are polygon elements under one <svg>, so the whole thing
-     is one draw layer and the browser can offload it to the GPU. */
+  /* hex grid background — build a dense pointy-top honeycomb once at
+     load across the full SVG viewBox, then skip every cell that falls
+     in the middle column so hexes only live in the two side strips.
+     ~32% of the remaining cells get the firefly pulse class with a
+     random delay so flashes drift upward across the mesh. */
   var hexSvg = document.querySelector('.bg-hex__svg');
   if (hexSvg) {
     var vbW = 1600, vbH = 1000;
-    var size = 46;                         // hex radius (center to vertex)
+    var size = 28;                         // smaller radius → denser grid
     var hexW = Math.sqrt(3) * size;        // pointy-top horizontal pitch
     var rowStep = 1.5 * size;              // vertical pitch (overlapping)
     var cols = Math.ceil(vbW / hexW) + 2;
     var rows = Math.ceil(vbH / rowStep) + 2;
+    // only generate hexes in the two outer side strips: center ~40% is
+    // left completely empty for the hero and status card
+    var midStart = 480;
+    var midEnd = 1120;
     var NS = 'http://www.w3.org/2000/svg';
     var frag = document.createDocumentFragment();
     for (var r = 0; r < rows; r++) {
@@ -23,6 +27,7 @@
       var xOff = (r % 2) ? hexW / 2 : 0;
       for (var c = 0; c < cols; c++) {
         var xC = c * hexW + xOff - hexW / 2;
+        if (xC > midStart && xC < midEnd) continue;
         var pts = '';
         for (var v = 0; v < 6; v++) {
           var a = Math.PI / 3 * v - Math.PI / 2;
@@ -32,9 +37,9 @@
         var poly = document.createElementNS(NS, 'polygon');
         poly.setAttribute('points', pts.trim());
         poly.setAttribute('class', 'bg-hex__cell');
-        if (!reduceMotion && Math.random() < 0.18) {
+        if (!reduceMotion && Math.random() < 0.32) {
           poly.classList.add('bg-hex__cell--pulse');
-          poly.style.setProperty('--d', (Math.random() * 7.5).toFixed(2) + 's');
+          poly.style.setProperty('--d', (Math.random() * 4.5).toFixed(2) + 's');
         }
         frag.appendChild(poly);
       }

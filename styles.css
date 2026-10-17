@@ -73,8 +73,12 @@ section{ position:relative; z-index:1; scroll-margin-top:78px; }
   z-index:0;
   pointer-events:none;
   overflow:hidden;
-  -webkit-mask:radial-gradient(ellipse 65% 60% at center, transparent 8%, rgba(0,0,0,.55) 50%, black 92%);
-          mask:radial-gradient(ellipse 65% 60% at center, transparent 8%, rgba(0,0,0,.55) 50%, black 92%);
+  /* keep hexes only on the two side columns of the viewport; the
+     middle 40% stays empty for the hero/status card. Cells in the
+     middle are not generated at all (see script.js); this mask just
+     softens the inner edge of each side strip. */
+  -webkit-mask:linear-gradient(to right, black 0%, black 22%, transparent 32%, transparent 68%, black 78%, black 100%);
+          mask:linear-gradient(to right, black 0%, black 22%, transparent 32%, transparent 68%, black 78%, black 100%);
 }
 .bg-hex__svg{
   width:100%;
@@ -87,17 +91,24 @@ section{ position:relative; z-index:1; scroll-margin-top:78px; }
   stroke-width:1;
   opacity:.07;
 }
+/* firefly lifecycle: each pulsing cell starts invisible slightly below
+   its rest spot, fades in while rising to rest, holds at peak brightness,
+   then keeps drifting up as it fades out. opacity is 0 at both ends of
+   the cycle so there is no visible snap when the keyframes loop. */
 .bg-hex__cell--pulse{
-  animation:hex-pulse 7.5s ease-in-out infinite;
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:hex-rise 4.5s cubic-bezier(.4,0,.3,1) infinite;
   animation-delay:var(--d, 0s);
-  will-change:opacity;
 }
-@keyframes hex-pulse{
-  0%, 82%, 100%{ opacity:.08; stroke:var(--accent-soft); }
-  40%{ opacity:.32; stroke:var(--accent-glow); }
+@keyframes hex-rise{
+  0%   { opacity:0;   transform:translateY(14px); }
+  22%  { opacity:.4;  stroke:var(--accent-glow); }
+  60%  { opacity:.3;  stroke:var(--accent-glow); }
+  100% { opacity:0;   transform:translateY(-18px); }
 }
 @media (prefers-reduced-motion: reduce){
-  .bg-hex__cell--pulse{ animation:none; opacity:.1; }
+  .bg-hex__cell--pulse{ animation:none; opacity:.1; transform:none; }
 }
 
 /* header */
