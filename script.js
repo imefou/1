@@ -129,13 +129,62 @@
     });
   }
 
-  /* days editing, counted from March 15, 2026 */
+  /* days editing, counted from March 15, 2026 — counts up from 0 the
+     first time the number scrolls into view (one-shot), so the figure
+     feels like it's being tallied rather than just appearing */
   var dayCountEl = document.getElementById('edit-day-count');
   if (dayCountEl) {
     var startDate = new Date(2026, 2, 15); // March is month index 2
     var now = new Date();
     var diffDays = Math.max(0, Math.round((now - startDate) / 86400000));
-    dayCountEl.textContent = diffDays;
+
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      dayCountEl.textContent = diffDays;
+    } else {
+      dayCountEl.textContent = '0';
+      var countStarted = false;
+      var runCount = function(){
+        if (countStarted) return;
+        countStarted = true;
+        var duration = 1200;
+        var startTime = performance.now();
+        var tick = function(frameTime){
+          var p = Math.min(1, (frameTime - startTime) / duration);
+          var eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+          dayCountEl.textContent = Math.round(diffDays * eased);
+          if (p < 1) requestAnimationFrame(tick);
+          else dayCountEl.textContent = diffDays;
+        };
+        requestAnimationFrame(tick);
+      };
+      var countObs = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) {
+            runCount();
+            countObs.disconnect();
+          }
+        });
+      }, { threshold: 0.5 });
+      countObs.observe(dayCountEl);
+    }
+  }
+
+  /* hero name "Efou" — split into letter spans so each one fades/slides
+     up with a short stagger on load. Done in JS so the HTML stays clean
+     and screen readers still read the whole name. */
+  var nameEl = document.getElementById('typed-name');
+  if (nameEl && !reduceMotion) {
+    var nameText = nameEl.textContent;
+    nameEl.setAttribute('aria-label', nameText);
+    nameEl.textContent = '';
+    for (var li = 0; li < nameText.length; li++) {
+      var span = document.createElement('span');
+      span.className = 'letter';
+      span.setAttribute('aria-hidden', 'true');
+      span.style.setProperty('--i', li);
+      span.textContent = nameText[li];
+      nameEl.appendChild(span);
+    }
   }
 
   /* typing effect on hero subtitle */
